@@ -1,0 +1,88 @@
+### Obtencion de todos los comercios
+
+GET http://localhost:3000/api/comercios
+
+### Obtencion de los comercios ordenados ascendentemente por el cif
+
+GET http://localhost:3000/api/comercios?ordenar=cif
+
+### Obtencion un comercio por su cif
+
+GET http://localhost:3000/api/comercios/ABC123456X
+
+### Creacion de algunos comercios
+
+POST http://localhost:3000/api/comercios
+Content-Type: application/json
+
+{
+    "nombreComercio": "Comercio1",
+    "CIF": "ABC123456X",
+    "direccion": "Calle Uno 60",
+    "email": "correo1@email.com",
+    "telefonoDeContacto": "12345678",
+    "idPagina": 1
+}
+
+###
+POST http://localhost:3000/api/comercios
+Content-Type: application/json
+
+{
+    "nombreComercio": "Libreria Saber",
+    "CIF": "DEF789123Y",
+    "direccion": "Avenida Conocimiento 45",
+    "email": "contacto@saberlibros.com",
+    "telefonoDeContacto": "87654321",
+    "idPagina": 2
+}
+
+###
+POST http://localhost:3000/api/comercios
+Content-Type: application/json
+
+{
+    "nombreComercio": "Café Dulce Aroma",
+    "CIF": "GHI456789Z",
+    "direccion": "Plaza Central 12",
+    "email": "info@dulcearoma.com",
+    "telefonoDeContacto": "65432109",
+    "idPagina": 3
+}
+
+###
+
+POST http://localhost:3000/api/comercios
+Content-Type: application/json
+
+{
+    "nombreComercio": "Comercio32",
+    "CIF": "ANP842014Z",
+    "direccion": "Plaza Central 12",
+    "email": "info@dulcearoma.com",
+    "telefonoDeContacto": "65432109",
+    "idPagina": 3
+}
+
+### Actualizacion de un comercio mediante su cif
+
+PUT http://localhost:3000/api/comercios/ABC123456X
+Content-Type: application/json
+
+{
+    "nombreComercio": "Comercio Cambiado",
+    "CIF": "ABC123456X",
+    "direccion": "Calle Cambio 60",
+    "email": "correo1cambiado@email.com",
+    "telefonoDeContacto": "12345678",
+    "idPagina": 10
+}
+
+### Eliminacion fisica de un comercio mediante su cif
+
+DELETE http://localhost:3000/api/comercios/ABC123456X
+
+### Eliminacion logica de un comercio mediante su cif y un parametro query
+
+DELETE http://localhost:3000/api/comercios/ABC123456X?delete=soft
+
