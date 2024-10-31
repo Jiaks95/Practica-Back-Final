@@ -1,27 +1,30 @@
 ### Obtencion de todos los comercios
 
 GET http://localhost:3000/api/comercios
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3MzAzMDc3MzAsImV4cCI6MTc2MTg2NTMzMH0.5xe8ydfVkrVOmu4G-nrW8drUA4xd3t0KiXuXf5wDLtI
 ### Obtencion de los comercios ordenados ascendentemente por el cif
 
 GET http://localhost:3000/api/comercios?ordenar=cif
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3Mjk2MTQwMTYsImV4cCI6MTcyOTYyODQxNn0.7mBxu7-1WZeqfdAtQAUHISkkTGuMKMibh4rR1i5Jk04
 
 ### Obtencion un comercio por su cif
 
 GET http://localhost:3000/api/comercios/ABC123456X
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3Mjk2MTQwMTYsImV4cCI6MTcyOTYyODQxNn0.7mBxu7-1WZeqfdAtQAUHISkkTGuMKMibh4rR1i5Jk04
 
 ### Creacion de algunos comercios
 
 POST http://localhost:3000/api/comercios
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3Mjk2MTQwMTYsImV4cCI6MTcyOTYyODQxNn0.7mBxu7-1WZeqfdAtQAUHISkkTGuMKMibh4rR1i5Jk04
 
 {
-    "nombreComercio": "Comercio1",
-    "CIF": "ABC123456X",
-    "direccion": "Calle Uno 60",
-    "email": "correo1@email.com",
-    "telefonoDeContacto": "12345678",
-    "idPagina": 1
+    "nombreComercio": "Comercio15",
+    "CIF": "NLW942013M",
+    "direccion": "Calle Adios 60",
+    "email": "email1@email.com",
+    "telefonoDeContacto": "23454364",
+    "idPagina": 9
 }
 
 ###
@@ -86,3 +89,306 @@ DELETE http://localhost:3000/api/comercios/ABC123456X
 
 DELETE http://localhost:3000/api/comercios/ABC123456X?delete=soft
 
+### 
+
+GET http://localhost:3000/api/webs
+
+###
+
+POST http://localhost:3000/api/webs
+Content-Type: application/json
+
+{
+    "ciudad": "Madrid",
+    "actividad": "Turismo",
+    "titulo": "Tour por el centro histórico",
+    "resumen": "Un recorrido por los principales monumentos del centro de Madrid.",
+    "textos": [],
+    "imagenes": [],
+    "reviews": {
+        "scoring": 4.5,
+        "totalReviews": 120,
+        "reviewBody": "Un tour muy interesante y bien organizado."
+    }
+}
+
+###
+
+POST http://localhost:3000/api/webs
+Content-Type: application/json
+
+{
+    "ciudad": "Barcelona",
+    "actividad": "Gastronomía",
+    "titulo": "Ruta de tapas por el barrio gótico",
+    "resumen": "Una experiencia gastronómica probando las mejores tapas del barrio gótico de Barcelona.",
+    "textos": [
+        "Visita varios bares locales",
+        "Degusta tapas tradicionales",
+        "Aprende sobre la historia de la gastronomía catalana"
+    ],
+    "imagenes": [],
+    "reviews": {
+        "scoring": 4.8,
+        "totalReviews": 85,
+        "reviewBody": "Deliciosas tapas y un ambiente espectacular."
+    }
+}
+
+###
+
+GET http://localhost:3000/api/webs/6716263ddc53bf1221e127dc
+
+### 
+
+DELETE http://localhost:3000/api/webs/67162641dc53bf1221e127de
+
+###
+
+PUT http://localhost:3000/api/webs/6716add722e9edfb0a829df9
+Content-Type: application/json
+
+
+{
+    "ciudad": "Madrid",
+    "actividad": "Gastronomía",
+    "titulo": "Tour de vinos y tapas en el centro de Madrid",
+    "resumen": "Explora los mejores vinos y tapas en un recorrido gastronómico por Madrid.",
+    "textos": [
+        "Visita bodegas y bares tradicionales",
+        "Prueba una selección de vinos españoles",
+        "Descubre la historia de los vinos de la región"
+    ],
+    "imagenes": [],
+    "reviews": {
+        "scoring": 4.2,
+        "totalReviews": 150,
+        "reviewBody": "Una experiencia gastronómica excepcional, con vinos deliciosos y tapas auténticas."
+    }
+}
+
+###
+
+DELETE http://localhost:3000/api/webs/6716add722e9edfb0a829df9?delete=soft
+
+###
+
+PATCH http://localhost:3000/api/webs/6716263ddc53bf1221e127dc
+Content-Type: multipart/form-data; boundary=Boundry
+
+--Boundry
+Content-Disposition: form-data; name="image"; filename="img.jpg"
+Content-Type: image/jpg 
+
+< ./landscape.jpg
+--Boundry--
+
+###
+
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+    "nombre": "Jesus",
+    "email": "email1@email.com",
+    "password": "password1",
+    "edad": 19,
+    "ciudad": "Madrid",
+    "intereses": [],
+    "permiteRecibirOfertas": true
+}
+
+###
+
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+    "nombre": "Maria",
+    "email": "email2@email.com",
+    "password": "password11",
+    "edad": 49,
+    "ciudad": "Moscu",
+    "intereses": ["Ciberseguridad"],
+    "rol": "admin"
+}
+
+###
+
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "email1@email.com",
+    "password": "password1"
+}
+
+###
+
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "email2@email.com",
+    "password": "password11"
+}
+
+###
+
+PATCH http://localhost:3000/api/users/6717c63f03936d923d5abaa1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YzYzZjAzOTM2ZDkyM2Q1YWJhYTEiLCJpYXQiOjE3Mjk2MTE2NTYsImV4cCI6MTcyOTYyNjA1Nn0.AE1wOARZirp5n6UxtoHIpcqy3MsyyqcvppemT_OvyFE
+
+{
+    "nombre": "Josefina II"
+}
+
+###
+
+DELETE http://localhost:3000/api/users/6717c63f03936d923d5abaa1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YzYzZjAzOTM2ZDkyM2Q1YWJhYTEiLCJpYXQiOjE3Mjk2MTE2NTYsImV4cCI6MTcyOTYyNjA1Nn0.AE1wOARZirp5n6UxtoHIpcqy3MsyyqcvppemT_OvyFE
+
+###
+
+GET https://naughty-matti-jiaks-27839f95.koyeb.app/api/comercios
+
+###
+
+POST http://localhost:3000/api/comercios
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3MzAxMzU3MjAsImV4cCI6MTc2MTY5MzMyMH0.zMdgXvaN6keQc5mFyvQsoo3p1vNiyEC3nJDX6wKxxaM
+
+{
+    "nombreComercio": "Comercio Maria",
+    "CIF": "QWE654321R",
+    "direccion": "Calle Maria 1",
+    "email": "emailmaria@email.com",
+    "telefonoDeContacto": "12131415"
+}
+
+###
+
+PUT http://localhost:3000/api/comercios/QWE654321R
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3MzAxMzU3MjAsImV4cCI6MTc2MTY5MzMyMH0.zMdgXvaN6keQc5mFyvQsoo3p1vNiyEC3nJDX6wKxxaM
+
+{
+    "nombreComercio": "Comercio Maria",
+    "CIF": "QWE654321R",
+    "direccion": "Calle Maria 1",
+    "email": "emailmaria2@email.com",
+    "telefonoDeContacto": "12131415",
+}
+
+###
+POST http://localhost:3000/api/comercios
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3MzAxOTY0ODMsImV4cCI6MTc2MTc1NDA4M30.4Vl2tWZnIOrUqYOB9uWFWaIkCuqLDwptzAJFPcyMZVQ
+
+{
+    "nombreComercio": "Comercio Ruben",
+    "CIF": "MNB123098V",
+    "direccion": "Calle Ruben 1",
+    "email": "emailruben@email.com",
+    "telefonoDeContacto": "10293847"
+}
+
+###
+
+GET http://localhost:3000/api/comercios/QWE654321R
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3Y2ZmYWI5Y2ZhYWRmYjFjMjI5M2IiLCJpYXQiOjE3MzAxMjY1NjQsImV4cCI6MTczMDE0MDk2NH0.cBzXxMPiuODRk3o1n3yfEih21VTTfPX7GCWnf9oUCKc
+
+###
+
+POST http://localhost:3000/api/webs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJRV0U2NTQzMjFSIiwiaWF0IjoxNzMwMTM3NDgxLCJleHAiOjE3NjE2OTUwODF9.35ogPv1WvZPLIcSmxhbNzk4MG45olcxFWpu0jTyW8cA
+
+{
+    "ciudad": "Madrid",
+    "actividad": "Gastronomia",
+    "titulo": "Tour de vinos y tapas en el centro de Madrid",
+    "resumen": "Explora los mejores vinos y tapas en un recorrido gastronómico por Madrid.",
+    "textos": [
+        "Visita bodegas y bares tradicionales",
+        "Prueba una selección de vinos españoles",
+        "Descubre la historia de los vinos de la región"
+    ],
+    "imagenes": [],
+    "reviews": {
+        "scoring": 4.2,
+        "totalReviews": 150,
+        "reviewBody": "Una experiencia gastronómica excepcional, con vinos deliciosos y tapas auténticas."
+    }
+}
+
+###
+
+POST http://localhost:3000/api/webs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwOThWIiwiaWF0IjoxNzMwMTk2NTAzLCJleHAiOjE3NjE3NTQxMDN9.qYDzKdAbTJ1xrIHdmeSADo377OyQTLbrM3NzHxmm25Q
+
+{
+    "ciudad": "Sevilla",
+    "actividad": "Turismo",
+    "titulo": "Tour de puntos de interes",
+    "resumen": "Visita los lugares mas interesantes de Sevilla.",
+    "textos": [],
+    "imagenes": [],
+    "reviews": {
+        "scoring": 4.0,
+        "totalReviews": 50,
+        "reviewBody": "Se visitan lugares muy interesantes."
+    }
+}
+
+###
+DELETE http://localhost:3000/api/webs/6720b7f96a496173afeb5408
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJRV0U2NTQzMjFSIiwiaWF0IjoxNzMwMTM3NDgxLCJleHAiOjE3NjE2OTUwODF9.35ogPv1WvZPLIcSmxhbNzk4MG45olcxFWpu0jTyW8cA
+
+###
+
+PUT http://localhost:3000/api/webs/6720b7f96a496173afeb5408
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwOThWIiwiaWF0IjoxNzMwMTk2NTAzLCJleHAiOjE3NjE3NTQxMDN9.qYDzKdAbTJ1xrIHdmeSADo377OyQTLbrM3NzHxmm25Q
+
+{
+    "ciudad": "Sevilla",
+    "actividad": "Turismo",
+    "titulo": "Tour de puntos de interes",
+    "resumen": "Visita los lugares mas interesantes de Sevilla.",
+    "textos": [],
+    "imagenes": [],
+    "reviews": {
+        "scoring": 4.4,
+        "totalReviews": 123,
+        "reviewBody": "Se visitan lugares muy interesantes y el trato es excelente."
+    }
+}
+
+###
+
+PATCH  http://localhost:3000/api/webs/6720b7f96a496173afeb5408/texts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJRV0U2NTQzMjFSIiwiaWF0IjoxNzMwMTM3NDgxLCJleHAiOjE3NjE2OTUwODF9.35ogPv1WvZPLIcSmxhbNzk4MG45olcxFWpu0jTyW8cA
+
+{
+    "textos": ["Aniversario", "Noticias"]
+}
+
+###
+
+PATCH http://localhost:3000/api/webs/6720b7f96a496173afeb5408/images
+Content-Type: multipart/form-data; boundary=Boundry
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwOThWIiwiaWF0IjoxNzMwMTk2NTAzLCJleHAiOjE3NjE3NTQxMDN9.qYDzKdAbTJ1xrIHdmeSADo377OyQTLbrM3NzHxmm25Q
+
+--Boundry
+Content-Disposition: form-data; name="image"; filename="img.jpg"
+Content-Type: image/jpg 
+
+< ./landscape.jpg
+--Boundry--
+
+###
+
+GET http://localhost:3000/api/use32

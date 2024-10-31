@@ -19,7 +19,8 @@ const comercioScheme = new mongoose.Schema(
             type: String
         },
         idPagina: {
-            type: Number
+            type: mongoose.Schema.Types.ObjectId,
+            default: null
         }
     }
 );
