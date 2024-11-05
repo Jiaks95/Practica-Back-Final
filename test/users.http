@@ -1,0 +1,29 @@
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+    "nombre": "Oscar",
+    "email": "oscar2@email.com",
+    "password": "password12",
+    "edad": "19",
+    "ciudad": "Madrid",
+    "intereses": ["Gastronomia", "Ciberseguridad"],
+    "rol": "admin"
+}
+
+###
+
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "oscar@email.com",
+    "password": "password12"
+}
+
+###
+
+GET http://localhost:3000/api/users/emails
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwOThWIiwiaWF0IjoxNzMwMTk2NTAzLCJleHAiOjE3NjE3NTQxMDN9.qYDzKdAbTJ1xrIHdmeSADo377OyQTLbrM3NzHxmm25Q
+
+###
