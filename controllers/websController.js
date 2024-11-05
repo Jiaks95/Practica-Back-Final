@@ -19,6 +19,42 @@ const checkWebProperty = (req, res, next) => {
     }
 };
 
+function orderByScore(req, res, webs) {
+    if (req.query.scoring === "true") {
+        webs.sort((a, b) => b.reviews.scoring - a.reviews.scoring);
+    }
+    res.send(webs);
+};
+
+const capitalizeFirstLetter = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+
+const getWebs = async (req, res) => {
+    try {
+        let ciudad = req.query.ciudad;
+        let actividad = req.query.actividad;
+        if (ciudad) ciudad = capitalizeFirstLetter(ciudad);
+        if (actividad) actividad = capitalizeFirstLetter(actividad);
+        console.log(ciudad)
+        let webs;
+        if (!ciudad) {
+            webs = await websModel.find({});
+        } else if (!actividad) {
+            webs = await websModel.find({ciudad: ciudad});
+        } else {
+            webs = await websModel.find({ciudad: ciudad, actividad: actividad});
+        }
+        if (req.query.scoring === "true") {
+            webs.sort((a, b) => b.reviews.scoring - a.reviews.scoring);
+        }
+        res.send(webs)
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("GET_WEBS_ERROR");
+    }
+};
+
 const getWeb = async (req, res) => {
     try {
         const id = req.params.id;
@@ -66,6 +102,18 @@ const updateWeb = async (req, res) => {
     }
 };
 
+const patchWeb = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const {body} = req;
+        const web = await websModel.findOneAndUpdate({_id: id}, body, {new: true});
+        res.send(web);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("PATCH_WEB_ERROR")
+    }
+}
+
 const uploadImageToWeb = async (req, res) => {
     try {
         const id = req.params.id;
@@ -102,6 +150,15 @@ const uploadTextToWeb = async (req, res) => {
     }
 };
 
+const reviewWeb = async (req, res) => {
+    try {
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("REVIEW_WEB_ERROR");
+    }
+}
+
 const deleteWeb = async (req, res) => {
     try {
         const id = req.params.id;
@@ -128,4 +185,4 @@ const deleteWeb = async (req, res) => {
     }
 }
 
-module.exports = { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb };
+module.exports = { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, patchWeb };

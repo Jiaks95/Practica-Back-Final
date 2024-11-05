@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb } = require("../controllers/websController.js");
+const { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, patchWeb } = require("../controllers/websController.js");
 const uploadMiddleware = require("../utils/storageHandle");
-const { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb } = require("../validators/websValidators");
-const { comercioMiddleware } = require("../middleware/session");
+const { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb, validatorPatchWeb } = require("../validators/websValidators");
+const { comercioMiddleware, authMiddleware } = require("../middleware/session");
+
+router.get("/", getWebs);
 
 /**
  * @openapi
@@ -93,6 +95,8 @@ router.post("/", comercioMiddleware, validatorCreateWeb, createWeb);
  */
 router.put("/:id", comercioMiddleware, validatorGetWeb, validatorCreateWeb, checkWebProperty, updateWeb);
 
+router.patch("/:id", comercioMiddleware, validatorGetWeb, validatorPatchWeb, checkWebProperty, patchWeb);
+
 /**
  * @openapi
  * /api/webs/{id}/images:
@@ -154,6 +158,8 @@ router.patch("/:id/images", comercioMiddleware, validatorGetWeb, checkWebPropert
  *          - bearerAuth: []
  */
 router.patch("/:id/texts", comercioMiddleware, validatorGetWeb, validatorUploadTextToWeb, checkWebProperty, uploadTextToWeb);
+
+router.patch("/:id/review", authMiddleware, validatorGetWeb);
 
 /**
  * @openapi

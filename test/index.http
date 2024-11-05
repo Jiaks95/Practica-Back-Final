@@ -391,4 +391,11 @@ Content-Type: image/jpg
 
 ###
 
-GET http://localhost:3000/api/use32
+PATCH http://localhost:3000/api/webs/6720b7f96a496173afeb5408
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwOThWIiwiaWF0IjoxNzMwMTk2NTAzLCJleHAiOjE3NjE3NTQxMDN9.qYDzKdAbTJ1xrIHdmeSADo377OyQTLbrM3NzHxmm25Q
+
+{
+    "titulo": "Tour de lugares de interes",
+    "ciudad": "Valencia"
+}

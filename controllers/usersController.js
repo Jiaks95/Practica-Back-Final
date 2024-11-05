@@ -97,8 +97,8 @@ const getUsersEmails = async (req, res) => {
             res.status(404).send("No tiene una web.");
             return;
         }
-        const actividad = await websModel.findOne({_id: comercioWebId}).select("actividad")
-        const usersEmails =  await usersModel.find({permiteRecibirOfertas: true, intereses: {$in: [actividad.actividad]}}).select("email");
+        const comercio = await websModel.findOne({_id: comercioWebId})
+        const usersEmails =  await usersModel.find({permiteRecibirOfertas: true, intereses: {$in: [comercio.actividad]}, ciudad: comercio.ciudad}).select("email");
         const interestedUsersEmails = usersEmails.map(user => user.email);
         res.send(interestedUsersEmails)
     } catch(err) {

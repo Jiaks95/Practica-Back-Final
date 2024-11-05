@@ -11,10 +11,12 @@ const { authMiddleware, comercioMiddleware } = require("../middleware/session");
  *      tags:
  *      - Users
  *      summary: Get users emails
- *      description: Get the emails of the users that can receive offers and are interested in the commerce's activity
+ *      description: Get the emails of the users that can receive offers and are interested in the commerce's activity and are in the same city
  *      responses:
  *          '200':
  *              description: Returns the updated user
+ *          '401':
+ *              description: No token error
  *          '404':
  *              description: The commerce doesn't have a web error
  *          '500':
@@ -93,6 +95,8 @@ router.post("/login", validateLogin, loginUser);
  *      responses:
  *          '200':
  *              description: Returns the updated user
+ *          '401':
+ *              description: No token error
  *          '403':
  *              description: Authorization error
  *          '500':
@@ -120,6 +124,8 @@ router.patch("/:id", authMiddleware, validateGetItem, updateUser);
  *      responses:
  *          '200':
  *              description: Returns a confirmation
+ *          '401':
+ *              description: No token error
  *          '403':
  *              description: Authorizarion error
  *          '500': 
