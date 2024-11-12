@@ -34,7 +34,7 @@ router.get("/", getWebs);
  *      security:
  *          - bearerAuth: []
  */
-router.get("/:id", comercioMiddleware, validatorGetWeb, checkWebProperty, getWeb);
+router.get("/:id", validatorGetWeb, getWeb);
 
 /**
  * @openapi

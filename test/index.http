@@ -370,7 +370,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwO
 
 PATCH  http://localhost:3000/api/webs/6720b7f96a496173afeb5408/texts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJRV0U2NTQzMjFSIiwiaWF0IjoxNzMwMTM3NDgxLCJleHAiOjE3NjE2OTUwODF9.35ogPv1WvZPLIcSmxhbNzk4MG45olcxFWpu0jTyW8cA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwOThWIiwiaWF0IjoxNzMwMTk2NTAzLCJleHAiOjE3NjE3NTQxMDN9.qYDzKdAbTJ1xrIHdmeSADo377OyQTLbrM3NzHxmm25Q
 
 {
     "textos": ["Aniversario", "Noticias"]
@@ -399,3 +399,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwO
     "titulo": "Tour de lugares de interes",
     "ciudad": "Valencia"
 }
+
+###
+
+GET http://localhost:3000/api/webs
+
+###
+
+PATCH http://localhost:3000/api/webs/6720b7f96a496173afeb5408/images
+Content-Type: multipart/form-data; boundary=Boundry
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwOThWIiwiaWF0IjoxNzMwMTk2NTAzLCJleHAiOjE3NjE3NTQxMDN9.qYDzKdAbTJ1xrIHdmeSADo377OyQTLbrM3NzHxmm25Q
+
+--Boundry
+Content-Disposition: form-data; name="image"; filename="img.jpg"
+Content-Type: image/jpg 
+
+< ./landscape.jpg
+--Boundry--

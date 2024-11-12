@@ -7,12 +7,16 @@ const morganBody = require("morgan-body");
 const loggerStream = require("./utils/loggerHandle");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpecs = require("./docs/swagger");
+const cors = require("cors");
 
 // Definicion y creacion de la aplicacion
 const app = express();
 
+app.use(cors())
 // Se le indica a la app que use el middleware json para parsear los json de las solicitudes a objetos JavaScript
 app.use(express.json());
+
+app.use(express.static("storage"))
 
 app.use("/api-docs",
     swaggerUi.serve,

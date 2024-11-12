@@ -7,7 +7,7 @@ const validateRegister = [
     check("password").exists().notEmpty().isLength({min: 8, max: 20}),
     check("edad").exists().notEmpty().isNumeric(),
     check("ciudad").exists().notEmpty(),
-    check("intereses").exists().notEmpty().isArray(),
+    check("intereses").optional().exists().notEmpty().isArray(),
     check("permiteRecibirOfertas").optional().isBoolean(),
     (req, res, next) => {
         return validateResults(req, res, next);

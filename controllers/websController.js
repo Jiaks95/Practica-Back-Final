@@ -1,4 +1,5 @@
 const { websModel, comerciosModel } = require("../models");
+const { findOneAndUpdate, findOne } = require("../models/nosql/comerciosModel");
 
 const checkWebProperty = (req, res, next) => {
     try {
@@ -36,12 +37,13 @@ const getWebs = async (req, res) => {
         let actividad = req.query.actividad;
         if (ciudad) ciudad = capitalizeFirstLetter(ciudad);
         if (actividad) actividad = capitalizeFirstLetter(actividad);
-        console.log(ciudad)
         let webs;
-        if (!ciudad) {
+        if (!ciudad && !actividad) {
             webs = await websModel.find({});
-        } else if (!actividad) {
+        } else if (ciudad && !actividad) {
             webs = await websModel.find({ciudad: ciudad});
+        } else if (actividad && !ciudad) {
+            webs = await websModel.find({actividad: actividad});
         } else {
             webs = await websModel.find({ciudad: ciudad, actividad: actividad});
         }
@@ -152,7 +154,12 @@ const uploadTextToWeb = async (req, res) => {
 
 const reviewWeb = async (req, res) => {
     try {
-
+        const id = req.params.id;
+        const {body} = req;
+        const score = body.score;
+        const review = body.review;
+        const webToBeReviewed = await websModel.findOne({_id: id});
+        const scoring = 1;
     } catch (err) {
         console.log(err);
         res.status(500).send("REVIEW_WEB_ERROR");
