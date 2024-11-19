@@ -6,8 +6,8 @@ const validatorCreateWeb = [
     check("actividad").exists().notEmpty(),
     check("titulo").exists().notEmpty(),
     check("resumen").exists().notEmpty(),
-    check("textos").exists().notEmpty(),
-    check("imagenes").exists().notEmpty().isArray(),
+    check("textos").optional().exists().notEmpty(),
+    check("imagenes").optional().exists().notEmpty().isArray(),
     (req, res, next) => {
         return validateResults(req, res, next);
     }
@@ -37,4 +37,12 @@ const validatorPatchWeb = [
     }
 ];
 
-module.exports = { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb, validatorPatchWeb };
+const validatorReview = [
+    check("score").exists().notEmpty().isNumeric().isFloat({min: 1, max: 5}),
+    check("review").exists(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb, validatorPatchWeb, validatorReview };

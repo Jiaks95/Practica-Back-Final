@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, patchWeb } = require("../controllers/websController.js");
-const uploadMiddleware = require("../utils/storageHandle");
-const { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb, validatorPatchWeb } = require("../validators/websValidators");
+const { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, patchWeb, uploadImageMemoryToWeb, reviewWeb } = require("../controllers/websController.js");
+const {uploadMiddleware, uploadMiddlewareMemory} = require("../utils/storageHandle");
+const { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb, validatorPatchWeb, validatorReview } = require("../validators/websValidators");
 const { comercioMiddleware, authMiddleware } = require("../middleware/session");
 
 router.get("/", getWebs);
@@ -159,8 +159,6 @@ router.patch("/:id/images", comercioMiddleware, validatorGetWeb, checkWebPropert
  */
 router.patch("/:id/texts", comercioMiddleware, validatorGetWeb, validatorUploadTextToWeb, checkWebProperty, uploadTextToWeb);
 
-router.patch("/:id/review", authMiddleware, validatorGetWeb);
-
 /**
  * @openapi
  * /api/webs/{id}:
@@ -188,6 +186,10 @@ router.patch("/:id/review", authMiddleware, validatorGetWeb);
  *      security:
  *          - bearerAuth: []
  */
-router.delete("/:id", comercioMiddleware, validatorGetWeb, checkWebProperty, deleteWeb)
+router.delete("/:id", comercioMiddleware, validatorGetWeb, checkWebProperty, deleteWeb);
+
+router.patch("/:id/images_memory", comercioMiddleware, validatorGetWeb, checkWebProperty, uploadMiddlewareMemory.single("image"), uploadImageMemoryToWeb);
+
+router.patch("/:id/review", authMiddleware, validatorGetWeb, validatorReview, reviewWeb);
 
 module.exports = router;

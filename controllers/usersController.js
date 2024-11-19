@@ -3,6 +3,7 @@ const { encrypt, compare } = require("../utils/passwordHandle");
 const { usersModel, websModel } = require("../models");
 const { tokenSign } = require("../utils/jwtHandle");
 const { matchedData } = require("express-validator");
+const { sendEmail } = require("../utils/emailHandle");
 
 const registerUser = async (req, res) => {
     try {
@@ -48,31 +49,62 @@ const loginUser = async (req, res) => {
     }
 };
 
+// const updateUser = async (req, res) => {
+//     try {
+//         const session_id = req.user._id;
+//         const user_id = req.params.id;
+        
+//         if (!session_id.equals(user_id)) {
+//             res.status(403).send("AUTHORIZATION_ERROR");
+//             return;
+//         }
+
+//         const { intereses: newIntereses, ...otherUpdates } = req.body;
+
+  
+//         const updateData = { ...otherUpdates };
+
+//         if (newIntereses) {
+//             updateData.$addToSet = { intereses: { $each: newIntereses } };
+//         }
+
+//         const updatedUser = await usersModel.findByIdAndUpdate(user_id, updateData, { new: true });
+//         res.send(updatedUser);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send("UPDATE_ERROR");
+//     }
+// };
+
 const updateUser = async (req, res) => {
     try {
         const session_id = req.user._id;
         const user_id = req.params.id;
-        
+
         if (!session_id.equals(user_id)) {
-            res.status(403).send("AUTHORIZATION_ERROR");
-            return;
+            return res.status(403).send({ error: "AUTHORIZATION_ERROR" });
         }
 
-        const { intereses: newIntereses, ...otherUpdates } = req.body;
+        const updateData = req.body;
 
-  
-        const updateData = { ...otherUpdates };
+        // Actualizar solo los campos presentes en req.body
+        const updatedUser = await usersModel.findByIdAndUpdate(
+            user_id,
+            { $set: updateData },
+            { new: true } // Devuelve el usuario actualizado
+        );
 
-        if (newIntereses) {
-            updateData.$addToSet = { intereses: { $each: newIntereses } };
+        if (!updatedUser) {
+            return res.status(404).send({ error: "USER_NOT_FOUND" });
         }
 
-        const updatedUser = await usersModel.findByIdAndUpdate(user_id, updateData, { new: true });
         res.send(updatedUser);
     } catch (err) {
-        res.status(500).send("UPDATE_ERROR");
+        console.error("Error al actualizar el usuario:", err);
+        res.status(500).send({ error: "UPDATE_ERROR", details: err.message });
     }
 };
+
 
 
 const deleteUser = async (req, res) => {
@@ -107,4 +139,15 @@ const getUsersEmails = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, updateUser, deleteUser, getUsersEmails };
+const send = async (req, res) => {
+    try {
+        const info = matchedData(req);
+        const data = await sendEmail(info);
+        res.send(data);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("SEND_EMAIL_ERROR");
+    }
+}
+
+module.exports = { registerUser, loginUser, updateUser, deleteUser, getUsersEmails, send };

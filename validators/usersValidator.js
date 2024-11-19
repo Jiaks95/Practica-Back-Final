@@ -1,4 +1,4 @@
-const { check, validationResult } = require("express-validator");
+const { check } = require("express-validator");
 const validateResults = require("../utils/validatorHandle");
 
 const validateRegister = [
@@ -42,4 +42,4 @@ const validateUpdateUser = [
     }
 ]
 
-module.exports = { validateRegister, validateLogin, validateGetItem };
+module.exports = { validateRegister, validateLogin, validateGetItem, validateUpdateUser };

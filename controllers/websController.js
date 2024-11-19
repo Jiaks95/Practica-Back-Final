@@ -1,5 +1,6 @@
 const { websModel, comerciosModel } = require("../models");
 const { findOneAndUpdate, findOne } = require("../models/nosql/comerciosModel");
+const uploadToPinata = require("../utils/UploadIPFShandle");
 
 const checkWebProperty = (req, res, next) => {
     try {
@@ -157,14 +158,30 @@ const reviewWeb = async (req, res) => {
         const id = req.params.id;
         const {body} = req;
         const score = body.score;
-        const review = body.review;
+        let review = body.review;
+        if (!review || review.trim().lenght === 0) {
+            review = "Review vacio."
+        }
+
         const webToBeReviewed = await websModel.findOne({_id: id});
-        const scoring = 1;
+
+        if (!webToBeReviewed) {
+            return res.status(404).send("WEB_NOT_FOUND_ERROR");
+        }
+
+        const newTotalReviews = webToBeReviewed.reviews.totalReviews + 1;
+        const newScoring = (webToBeReviewed.reviews.scoring * webToBeReviewed.reviews.totalReviews + score) / newTotalReviews
+
+        const reviewObject = {score, review};
+
+        const webActualizada = await websModel.findOneAndUpdate({_id: id}, {$set: {"reviews.scoring": newScoring, "reviews.totalReviews": newTotalReviews}, $push: {"reviews.reviewBody": reviewObject}}, {new: true});
+        
+        res.send(webActualizada);
     } catch (err) {
         console.log(err);
         res.status(500).send("REVIEW_WEB_ERROR");
     }
-}
+};
 
 const deleteWeb = async (req, res) => {
     try {
@@ -179,6 +196,7 @@ const deleteWeb = async (req, res) => {
             res.send("La web ha sido eliminada de forma logica");
         } else {
             webEliminada = await websModel.deleteOne({_id: id});
+            const comercio = req.comercio;
             await comerciosModel.findByIdAndUpdate(comercio._id, {idPagina: null}, {new: true});
             if (webEliminada.deletedCount === 0) {
                 res.status(404).send("La web a eliminar no se encontro");
@@ -190,6 +208,26 @@ const deleteWeb = async (req, res) => {
         console.log(err);
         res.status(500).send("DELETE_WEB_ERROR");
     }
+};
+
+const uploadImageMemoryToWeb = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const {body, file}  = req;
+        const fileBuffer = file.buffer;
+        const fileName = file.originalname;
+
+
+        const pinataResponse = await uploadToPinata(fileBuffer, fileName);
+        const ipfsFile = pinataResponse.IpfsHash;
+        const ipfs = `https://${process.env.PINATA_GATEWAY_URL}/ipfs/${ipfsFile}`
+        const data = await websModel.findOneAndUpdate({_id: id}, {$push: {imagenes: ipfs}});
+        const dataRes = {...data._doc, uri: ipfs}
+        res.send(dataRes);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("UPLOAD_IMAGE_MEMORY_ERROR");
+    }
 }
 
-module.exports = { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, patchWeb };
+module.exports = { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, patchWeb, uploadImageMemoryToWeb, reviewWeb };

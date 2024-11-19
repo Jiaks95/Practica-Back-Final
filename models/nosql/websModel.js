@@ -22,13 +22,22 @@ const WebScheme = new mongoose.Schema(
         },
         reviews: {
             scoring: {
-                type: Number
+                type: Number,
+                default: 0
             },
             totalReviews: {
-                type: Number
+                type: Number,
+                default: 0
             },
             reviewBody: {
-                type: String
+                type: [{
+                    score: {
+                        type: Number
+                    },
+                    review: {
+                        type: String
+                    }
+                }]
             }
         }
     }

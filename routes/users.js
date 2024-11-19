@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { validateRegister, validateLogin, validateGetItem } = require("../validators/usersValidator");
-const { registerUser, loginUser, updateUser, deleteUser, getUsersEmails } = require("../controllers/usersController");
+const { validateRegister, validateLogin, validateGetItem, validateUpdateUser } = require("../validators/usersValidator");
+const { registerUser, loginUser, updateUser, deleteUser, getUsersEmails, send } = require("../controllers/usersController");
 const { authMiddleware, comercioMiddleware } = require("../middleware/session");
+const { validatorMail } = require("../validators/mailValidator");
 
 /**
  * @openapi
@@ -25,6 +26,8 @@ const { authMiddleware, comercioMiddleware } = require("../middleware/session");
  *          - bearerAuth: []
  */
 router.get("/emails", comercioMiddleware, getUsersEmails);
+
+router.post("/send", validatorMail, send);
 
 /**
  * @openapi
@@ -104,7 +107,7 @@ router.post("/login", validateLogin, loginUser);
  *      security:
  *          - bearerAuth: []
  */
-router.patch("/:id", authMiddleware, validateGetItem, updateUser);
+router.patch("/update/:id", authMiddleware, validateGetItem, validateUpdateUser,  updateUser);
 
 /**
  * @openapi
@@ -133,6 +136,6 @@ router.patch("/:id", authMiddleware, validateGetItem, updateUser);
  *      security:
  *          - bearerAuth: []
  */
-router.delete("/:id", authMiddleware, validateGetItem, deleteUser);
+router.delete("/delete/:id", authMiddleware, validateGetItem, deleteUser);
 
 module.exports = router;

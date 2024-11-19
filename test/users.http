@@ -29,3 +29,88 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJNTkIxMjMwO
 ###
 
 GET http://localhost:3000/api/webs/6720b7f96a496173afeb5408
+
+###
+
+POST http://localhost:3000/api/users/send
+Content-Type: application/json
+
+{
+    "subject": "Prueba",
+    "text": "Funciona si ves esto",
+    "to": "oscarjia95@email.com"
+}
+
+###
+
+PATCH http://localhost:3000/api/webs/:id
+Content-Type: application/json
+
+{
+    "score": 3,
+    "review": "Esta decente"
+}
+
+###
+
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "oscar@email.com",
+    "password": "password12"
+}
+
+### 
+
+POST http://localhost:3000/api/comercios
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMTMxZDg5ZDE4NWRkZTRjMTc1M2EiLCJpYXQiOjE3MzE5Mzg5NzIsImV4cCI6MTc2MzQ5NjU3Mn0.E3lGAsG_b-NEs01_VhBfjiMvmLu7FYdq5wPiOApvz0s
+
+{
+    "nombreComercio": "Comercio Jia",
+    "CIF": "EOX350954V",
+    "direccion": "Avenida Jia 7",
+    "email": "comerciojia@email.com",
+    "telefonoDeContacto": "61937546"
+}
+
+###
+
+POST http://localhost:3000/api/webs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJFT1gzNTA5NTRWIiwiaWF0IjoxNzMxOTM5MjAwLCJleHAiOjE3NjM0OTY4MDB9.Bjepmuu4aLw3JLmEOlBhCWBKcdv594DueTw9jTDpFK8
+
+{
+    "ciudad": "Extremadura",
+    "actividad": "Turismo",
+    "titulo": "Haga turismo por Extremadura",
+    "resumen": "Descubra los mejores lugares de Extremadura."
+}
+
+###
+
+PATCH http://localhost:3000/api/webs/673c7cf636254ac683c8e423/review
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMTMxZDg5ZDE4NWRkZTRjMTc1M2EiLCJpYXQiOjE3MzE5Mzg5NzIsImV4cCI6MTc2MzQ5NjU3Mn0.E3lGAsG_b-NEs01_VhBfjiMvmLu7FYdq5wPiOApvz0s
+
+{
+    "score": 3,
+    "review": ""
+}
+
+###
+
+PATCH http://localhost:3000/api/webs/673c7cf636254ac683c8e423/review
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMTMxZDg5ZDE4NWRkZTRjMTc1M2EiLCJpYXQiOjE3MzE5Mzg5NzIsImV4cCI6MTc2MzQ5NjU3Mn0.E3lGAsG_b-NEs01_VhBfjiMvmLu7FYdq5wPiOApvz0s
+
+{
+    "score": 5,
+    "review": "Excelente"
+}
+
+###
+
+DELETE http://localhost:3000/api/users/delete/673c9a10fe99bd97f44175c2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNjOWExMGZlOTliZDk3ZjQ0MTc1YzIiLCJpYXQiOjE3MzIwMzA4NDksImV4cCI6MTc2MzU4ODQ0OX0.aotv_XqiilIBk3WTk8Eie2CAwWAQ1z8nOekz6AjGMw8
