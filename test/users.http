@@ -90,6 +90,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJFT1gzNTA5N
 
 ###
 
+DELETE http://localhost:3000/api/webs/673f5be12a76939c6be1c14e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWYiOiJFT1gzNTA5NTRWIiwiaWF0IjoxNzMxOTM5MjAwLCJleHAiOjE3NjM0OTY4MDB9.Bjepmuu4aLw3JLmEOlBhCWBKcdv594DueTw9jTDpFK8
+
+###
+
 PATCH http://localhost:3000/api/webs/673c7cf636254ac683c8e423/review
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMTMxZDg5ZDE4NWRkZTRjMTc1M2EiLCJpYXQiOjE3MzE5Mzg5NzIsImV4cCI6MTc2MzQ5NjU3Mn0.E3lGAsG_b-NEs01_VhBfjiMvmLu7FYdq5wPiOApvz0s

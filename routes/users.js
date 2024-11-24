@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { validateRegister, validateLogin, validateGetItem, validateUpdateUser } = require("../validators/usersValidator");
-const { registerUser, loginUser, updateUser, deleteUser, getUsersEmails, send } = require("../controllers/usersController");
+const { registerUser, loginUser, updateUser, deleteUser, getUsersEmails } = require("../controllers/usersController");
 const { authMiddleware, comercioMiddleware } = require("../middleware/session");
-const { validatorMail } = require("../validators/mailValidator");
 
 /**
  * @openapi
@@ -26,8 +25,6 @@ const { validatorMail } = require("../validators/mailValidator");
  *          - bearerAuth: []
  */
 router.get("/emails", comercioMiddleware, getUsersEmails);
-
-router.post("/send", validatorMail, send);
 
 /**
  * @openapi

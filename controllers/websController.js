@@ -1,5 +1,4 @@
 const { websModel, comerciosModel } = require("../models");
-const { findOneAndUpdate, findOne } = require("../models/nosql/comerciosModel");
 const uploadToPinata = require("../utils/UploadIPFShandle");
 
 const checkWebProperty = (req, res, next) => {
@@ -19,13 +18,6 @@ const checkWebProperty = (req, res, next) => {
        console.log(err);
        res.statur(500).send("CHECK_WEB_PROPERTY_ERROR") 
     }
-};
-
-function orderByScore(req, res, webs) {
-    if (req.query.scoring === "true") {
-        webs.sort((a, b) => b.reviews.scoring - a.reviews.scoring);
-    }
-    res.send(webs);
 };
 
 const capitalizeFirstLetter = (word) => {
@@ -104,18 +96,6 @@ const updateWeb = async (req, res) => {
         res.status(500).send("UPDATE_WEB_ERROR");
     }
 };
-
-const patchWeb = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const {body} = req;
-        const web = await websModel.findOneAndUpdate({_id: id}, body, {new: true});
-        res.send(web);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send("PATCH_WEB_ERROR")
-    }
-}
 
 const uploadImageToWeb = async (req, res) => {
     try {
@@ -202,7 +182,7 @@ const deleteWeb = async (req, res) => {
                 res.status(404).send("La web a eliminar no se encontro");
                 return;
             }
-            res.send("La web ha sido eliminada de forma fisica");
+            res.send(webEliminada);
         }
     } catch (err) {
         console.log(err);
@@ -230,4 +210,4 @@ const uploadImageMemoryToWeb = async (req, res) => {
     }
 }
 
-module.exports = { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, patchWeb, uploadImageMemoryToWeb, reviewWeb };
+module.exports = { checkWebProperty, getWeb, createWeb, updateWeb, uploadImageToWeb, uploadTextToWeb, deleteWeb, getWebs, uploadImageMemoryToWeb, reviewWeb };

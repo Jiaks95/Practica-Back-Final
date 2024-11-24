@@ -25,12 +25,14 @@ const authMiddleware = async (req, res, next) => {
 const comercioMiddleware = async (req, res, next) => {
     try {
         if (!req.headers.authorization) {
+            console.log("Missing header")
             res.status(401).send("NOT_TOKEN");
             return
         }
         const token = req.headers.authorization.split(" ").pop();
         const dataToken = await verifyToken(token);
         if (!dataToken.cif) {
+            console.log("Token without cif")
             res.status(401).send("ERROR_CIF_TOKEN");
             return  
         }

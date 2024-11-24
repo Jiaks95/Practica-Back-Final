@@ -1,9 +1,7 @@
-const express = require("express");
 const { encrypt, compare } = require("../utils/passwordHandle");
 const { usersModel, websModel } = require("../models");
 const { tokenSign } = require("../utils/jwtHandle");
 const { matchedData } = require("express-validator");
-const { sendEmail } = require("../utils/emailHandle");
 
 const registerUser = async (req, res) => {
     try {
@@ -116,7 +114,7 @@ const deleteUser = async (req, res) => {
             return
         }
         const deletedUser = await usersModel.deleteOne({_id: user_id});
-        res.send("Usuario eliminado");
+        res.send(deletedUser);
     } catch (err) {
         res.status(500).send("DELETE_ERROR");
     }
@@ -139,15 +137,4 @@ const getUsersEmails = async (req, res) => {
     }
 };
 
-const send = async (req, res) => {
-    try {
-        const info = matchedData(req);
-        const data = await sendEmail(info);
-        res.send(data);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send("SEND_EMAIL_ERROR");
-    }
-}
-
-module.exports = { registerUser, loginUser, updateUser, deleteUser, getUsersEmails, send };
+module.exports = { registerUser, loginUser, updateUser, deleteUser, getUsersEmails };

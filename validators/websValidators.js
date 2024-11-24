@@ -27,16 +27,6 @@ const validatorUploadTextToWeb = [
     }
 ];
 
-const validatorPatchWeb = [
-    check("ciudad").optional().exists().notEmpty(),
-    check("actividad").optional().exists().notEmpty(),
-    check("titulo").optional().exists().notEmpty(),
-    check("resumen").optional().exists().notEmpty(),
-    (req, res, next) => {
-        return validateResults(req, res, next);
-    }
-];
-
 const validatorReview = [
     check("score").exists().notEmpty().isNumeric().isFloat({min: 1, max: 5}),
     check("review").exists(),
@@ -45,4 +35,4 @@ const validatorReview = [
     }
 ];
 
-module.exports = { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb, validatorPatchWeb, validatorReview };
+module.exports = { validatorCreateWeb, validatorGetWeb, validatorUploadTextToWeb, validatorReview };

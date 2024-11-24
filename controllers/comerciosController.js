@@ -72,7 +72,11 @@ const updateComercio = async (req, res) => {
     if (!comercioActualizado) {
       res.status(404).end("El comercio a actualizar no existe");
     } else {
-      res.send({ comercioActualizado });
+      const data = {
+        token: await tokenComercio(comercioActualizado),
+        comercio: comercioActualizado
+      };
+      res.send(data);
     }
   } catch(err) {
     console.log(err);
@@ -92,11 +96,11 @@ const deleteComercio = async (req, res) => {
       comercioEliminado = await comerciosModel.delete({ CIF: cif });
       // Si no, el borrado sera fisico
     } else {
-      comercioEliminado = await comerciosModel.findOneAndDelete({ CIF: cif });
+      comercioEliminado = await comerciosModel.deleteOne({ CIF: cif });
     }
     // Si se puedo eliminar el comercio, se avisa
     if (comercioEliminado) {
-      res.send("Comercio eliminado.");
+      res.send(comercioEliminado);
     // Si no se pudo, es decir, no habia un comercio con ese cif, se avisa
     } else {
       res.status(404).end("El comercio a eliminar no existe");
