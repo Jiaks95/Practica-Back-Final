@@ -47,61 +47,64 @@ const loginUser = async (req, res) => {
     }
 };
 
-// const updateUser = async (req, res) => {
-//     try {
-//         const session_id = req.user._id;
-//         const user_id = req.params.id;
-        
-//         if (!session_id.equals(user_id)) {
-//             res.status(403).send("AUTHORIZATION_ERROR");
-//             return;
-//         }
-
-//         const { intereses: newIntereses, ...otherUpdates } = req.body;
-
-  
-//         const updateData = { ...otherUpdates };
-
-//         if (newIntereses) {
-//             updateData.$addToSet = { intereses: { $each: newIntereses } };
-//         }
-
-//         const updatedUser = await usersModel.findByIdAndUpdate(user_id, updateData, { new: true });
-//         res.send(updatedUser);
-//     } catch (err) {
-//         console.log(err);
-//         res.status(500).send("UPDATE_ERROR");
-//     }
-// };
-
 const updateUser = async (req, res) => {
     try {
         const session_id = req.user._id;
         const user_id = req.params.id;
-
+        
         if (!session_id.equals(user_id)) {
-            return res.status(403).send({ error: "AUTHORIZATION_ERROR" });
+            res.status(403).send("AUTHORIZATION_ERROR");
+            return;
         }
 
-        const updateData = req.body;
+        const { intereses: newIntereses, ...otherUpdates } = req.body;
 
-        // Actualizar solo los campos presentes en req.body
-        const updatedUser = await usersModel.findByIdAndUpdate(
-            user_id,
-            { $set: updateData },
-            { new: true } // Devuelve el usuario actualizado
-        );
+  
+        const updateData = { ...otherUpdates };
 
+        if (newIntereses) {
+            updateData.$addToSet = { intereses: { $each: newIntereses } };
+        }
+
+        const updatedUser = await usersModel.findByIdAndUpdate(user_id, updateData, { new: true });
         if (!updatedUser) {
             return res.status(404).send({ error: "USER_NOT_FOUND" });
         }
-
         res.send(updatedUser);
     } catch (err) {
-        console.error("Error al actualizar el usuario:", err);
-        res.status(500).send({ error: "UPDATE_ERROR", details: err.message });
+        console.log(err);
+        res.status(500).send("UPDATE_ERROR");
     }
 };
+
+// const updateUser = async (req, res) => {
+//     try {
+//         const session_id = req.user._id;
+//         const user_id = req.params.id;
+
+//         if (!session_id.equals(user_id)) {
+//             return res.status(403).send({ error: "AUTHORIZATION_ERROR" });
+//         }
+
+//         const updateData = req.body;
+
+//         // Actualizar solo los campos presentes en req.body
+//         const updatedUser = await usersModel.findByIdAndUpdate(
+//             user_id,
+//             { $set: updateData },
+//             { new: true } // Devuelve el usuario actualizado
+//         );
+
+//         if (!updatedUser) {
+//             return res.status(404).send({ error: "USER_NOT_FOUND" });
+//         }
+
+//         res.send(updatedUser);
+//     } catch (err) {
+//         console.error("Error al actualizar el usuario:", err);
+//         res.status(500).send({ error: "UPDATE_ERROR", details: err.message });
+//     }
+// };
 
 
 
