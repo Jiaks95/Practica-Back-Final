@@ -80,6 +80,8 @@ router.get("/:cif", authMiddleware, checkRol(["admin"]), validatorGetComercio, g
  *              description: Returns the newly created commerce
  *          '500':
  *              description: Commerce creation error
+ *      security:
+ *          - bearerAuth: []
  */
 router.post("/", authMiddleware, checkRol(["admin"]), validatorCreateComercio, createComercio);
 

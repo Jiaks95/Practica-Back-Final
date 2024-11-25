@@ -38,8 +38,6 @@ const { comercioMiddleware, authMiddleware } = require("../middleware/session");
  *              description: Returns the webs
  *          '500':
  *              description: Get webs
- *      security:
- *          - bearerAuth: []
  */
 router.get("/", getWebs);
 
@@ -67,8 +65,6 @@ router.get("/", getWebs);
  *              description: The web doesn't exists or the commerce doesn't have a web error
  *          '500':
  *              description: Get web or check web property error
- *      security:
- *          - bearerAuth: []
  */
 router.get("/:id", validatorGetWeb, getWeb);
 
