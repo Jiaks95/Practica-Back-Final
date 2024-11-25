@@ -74,7 +74,7 @@ router.post("/login", validateLogin, loginUser);
 
 /**
  * @openapi
- * /api/users/{id}:
+ * /api/users/update/{id}:
  *  patch:
  *      tags:
  *      - Users
@@ -108,7 +108,7 @@ router.patch("/update/:id", authMiddleware, validateGetItem, validateUpdateUser,
 
 /**
  * @openapi
- * /api/users/{id}:
+ * /api/users/delete/{id}:
  *  delete:
  *      tags:
  *      - Users

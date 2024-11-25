@@ -262,6 +262,10 @@ router.patch("/:id/images_memory", comercioMiddleware, validatorGetWeb, checkWeb
  *              required: true
  *              schema:
  *                  type: string
+ *      requestBody: 
+ *          content:
+ *              application/json:
+ *                      example: {"score": 4, "review": "Esta bien"}
  *      responses:
  *          '200':
  *              description: Returns the reviewed web
